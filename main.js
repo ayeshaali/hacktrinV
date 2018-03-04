@@ -45,6 +45,9 @@ var div = d3.select("body")
     		.attr("class", "tooltip")               
     		.style("opacity", 0);
 
+var div = d3.select("body").append("div") 
+    .attr("class", "tooltip")       
+    .style("opacity", 0);
 
 function update(year) {
 // Load in my states data!
@@ -94,23 +97,31 @@ svg.selectAll("path")
 	.style("stroke", "#fff")
 	.style("stroke-width", "1")
 	.style("fill", function(d) {
+    var value = d.properties.year;
+    var territory = d.properties.territory;
+    if (value<=year) {
+      return "rgb(69,173,168)";
+      //return color(value);
+    } else if(territory<=year){
+      return "rgb(145, 216, 209)";
+    } else { 
+      return "rgb(213,222,217)";
+    }
+  })
+  .on("mouseover", function(d) {   
+    div.transition()    
+    .duration(200)    
+    .style("opacity", .9);    
 
-	// Get data value
-	var value = d.properties.year;
-  var territory = d.properties.territory;
-
-  if (value<=year) {
-    return "rgb(69,173,168)";
-    //return color(value);
-  }
-  else if(territory<=year){
-    return "rgb(145, 216, 209)";
-  }
-  else {
-    //If value is undefined…
-    return "rgb(213,222,217)";
-  }
-});
+    div.html(d.properties.year + "<br/>")  
+    .style("left", (d3.event.pageX) + "px")   
+    .style("top", (d3.event.pageY - 28) + "px");  
+  })          
+  .on("mouseout", function(d) {   
+    div.transition()    
+    .duration(500)    
+    .style("opacity", 0); 
+  });
 
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
 var legendText = ["Current States","Territories", "Non-states",year];
