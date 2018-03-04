@@ -1,3 +1,21 @@
+#header {
+  z-index: 2;
+  background: white;
+  position: absolute;
+  padding: 0em;
+  top: 0em;
+  left: 0em;
+  color: red;
+  overflow: auto;
+}
+
+#name {
+  font-family: "Abril Fatface";
+  padding-left: 2%;
+  color: hsl(225,90%,80%);
+  font-size: 120%;
+}
+
 
 /* On mouse hover, lighten state color */
 path:hover {
