@@ -138,7 +138,7 @@ var div = d3.select("body")
 function update(year) {
 // Load in my states data!
 d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
-color.domain([0,1,2018]); // setting the range of the input data
+color.domain([0,1,2,2018]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
 d3.json("https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", function(json) {
