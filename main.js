@@ -53,7 +53,7 @@ function update(year) {
 // Load in my states data!
 d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
 color.domain([0,1,2,2018]); // setting the range of the input data
-console.log(data);
+//console.log(data);
 
 // Load GeoJSON data and merge with states data
 d3.json("https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", function(json) {
@@ -70,7 +70,7 @@ for (var i = 0; i < data.length; i++) {
 
   // Grab State territory
   var dataTerritory = data[i].territory;
-  console.log(dataTerritory);
+  //console.log(dataTerritory);
 
   // Find the corresponding state inside the GeoJSON
   for (var j = 0; j < json.features.length; j++)  {
@@ -113,7 +113,8 @@ svg.selectAll("path")
     .duration(200)    
     .style("opacity", .9);    
 
-    div.html(d.properties.state+ "<br/>"+ d.properties.year )  
+    console.log(d.properties.year);  
+    div.html(d.properties.name+ "<br/>"+ d.properties.year )
     .style("left", (d3.event.pageX) + "px")   
     .style("top", (d3.event.pageY - 28) + "px");  
   })          
