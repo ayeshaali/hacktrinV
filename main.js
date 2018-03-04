@@ -30,7 +30,7 @@ var path = d3.geo.path()               // path generator that will convert GeoJS
 		
 // Define linear scale for output
 var color = d3.scale.linear()
-			  .range(["rgb(193,213,231)", "rgb(213,222,217)", "rgb(145, 216, 209)", "rgb(69,173,168)"]);
+			  .range(["steelblue", "rgb(213,222,217)", "rgb(145, 216, 209)", "rgb(69,173,168)"]);
 
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
@@ -142,11 +142,13 @@ var legend = d3.select("body").append("svg")
    		  .style("fill", color);
 
   	legend.append("text")
-  		  .data(legendText)
+  		    .data(legendText)
       	  .attr("x", 24)
       	  .attr("y", 9)
       	  .attr("dy", ".35em")
+          .style("color", "white")
       	  .text(function(d) { return d; });
+
 	});
 });
 }
