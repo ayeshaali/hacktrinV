@@ -1,14 +1,14 @@
-state,year
+state,year, territory
 Alabama,1819
 Alaska,1959
 Arizona,1912
 Arkansas,1836
 California,1850
 Colorado,1876
-Connecticut,1788
-Delaware,1787
+Connecticut,1788,1776
+Delaware,1787,1776
 Florida,1845
-Georgia,1788
+Georgia,1788,1776
 Hawaii,1959
 Idaho,1890
 Illinois,1818
@@ -19,7 +19,7 @@ Kentucky,1792
 Louisiana,1812
 Maine,1820
 Maryland,1788
-Massachusetts,1788
+Massachusetts,1788,1776
 Michigan,1837
 Minnesota,1858
 Mississippi,1817
@@ -27,24 +27,24 @@ Missouri,1821
 Montana,1889
 Nebraska,1867
 Nevada,1864
-New Hampshire,1788
-New Jersey,1787
+New Hampshire,1788,1776
+New Jersey,1787,1776
 New Mexico,1912
-New York,1788
-North Carolina,1789
+New York,1788,1776
+North Carolina,1789,1776
 North Dakota,1889
 Ohio,1803
 Oklahoma,1907
 Oregon,1859
-Pennsylvania,1787
-Rhode Island,1790
-South Carolina,1788
+Pennsylvania,1787,1776
+Rhode Island,1790,1776
+South Carolina,1788,1776
 South Dakota,1889
 Tennessee,1796
 Texas,1845
 Utah,1896
-Vermont,1791
-Virginia,1788
+Vermont,1791,1776
+Virginia,1788,1776
 Washington,1889
 Wisconsin,1848
 West Virginia,1863
