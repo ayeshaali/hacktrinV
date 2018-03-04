@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style type="text/css">
 
 /* On mouse hover, lighten state color */
@@ -202,7 +203,7 @@ svg.selectAll("path")
 });
 
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-var legendText = ["Current States","Territories", "Non-State",year];
+var legendText = ["Current States","Territories", "Non-states",year];
 var legend = d3.select("body").append("svg")
       			.attr("class", "legend")
      			.attr("width", 140)
@@ -236,6 +237,7 @@ var legend = d3.select("body").append("svg")
         //console.log(this.value);
         year=this.value;
         svg.selectAll("*").remove();
+        $('.legend').remove();
         update(year);
   }
 </script>
