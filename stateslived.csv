@@ -1,51 +1,51 @@
 state,year, territory
-Alabama,1819
-Alaska,1959
-Arizona,1912
-Arkansas,1836
-California,1850
-Colorado,1876
+Alabama,1819,1798
+Alaska,1959,1867
+Arizona,1912,1848
+Arkansas,1836,1803
+California,1850,1848
+Colorado,1876,1803
 Connecticut,1788,1776
 Delaware,1787,1776
-Florida,1845
+Florida,1845,1819
 Georgia,1788,1776
-Hawaii,1959
-Idaho,1890
-Illinois,1818
-Indiana,1816
-Iowa,1846
-Kansas,1861
-Kentucky,1792
-Louisiana,1812
-Maine,1820
-Maryland,1788
+Hawaii,1959,1898
+Idaho,1890,1863
+Illinois,1818,1809
+Indiana,1816,1800
+Iowa,1846,1803
+Kansas,1861,1803
+Kentucky,1792,1776
+Louisiana,1812,1803
+Maine,1820,1776
+Maryland,1788,1776
 Massachusetts,1788,1776
-Michigan,1837
-Minnesota,1858
-Mississippi,1817
-Missouri,1821
-Montana,1889
-Nebraska,1867
-Nevada,1864
+Michigan,1837,1805
+Minnesota,1858,1803
+Mississippi,1817,1804
+Missouri,1821,1803
+Montana,1889,1803
+Nebraska,1867,1803
+Nevada,1864,1848
 New Hampshire,1788,1776
 New Jersey,1787,1776
-New Mexico,1912
+New Mexico,1912,1848
 New York,1788,1776
 North Carolina,1789,1776
-North Dakota,1889
-Ohio,1803
-Oklahoma,1907
-Oregon,1859
+North Dakota,1889,1861
+Ohio,1803,1787
+Oklahoma,1907,1803
+Oregon,1859,1846
 Pennsylvania,1787,1776
 Rhode Island,1790,1776
 South Carolina,1788,1776
-South Dakota,1889
-Tennessee,1796
-Texas,1845
-Utah,1896
+South Dakota,1889,1803
+Tennessee,1796,1789
+Texas,1845,1845
+Utah,1896,1848
 Vermont,1791,1776
 Virginia,1788,1776
-Washington,1889
-Wisconsin,1848
-West Virginia,1863
-Wyoming,1890
+Washington,1889,1846
+Wisconsin,1848,1783
+West Virginia,1863,1776
+Wyoming,1890,1803
