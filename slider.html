@@ -73,11 +73,11 @@
 <script>
 
 var formatDateIntoYear = d3.timeFormat("%Y");
-var formatDate = d3.timeFormat("%b %Y");
-var parseDate = d3.timeParse("%m/%d/%y");
+var formatDate = d3.timeFormat("%Y");
+var parseDate = d3.timeParse("%y");
 
-var startDate = new Date("1789-01-01"),
-    endDate = new Date("2018-01-01");
+var startDate = new Date("1789"),
+    endDate = new Date("2018");
 
 var margin = {top:50, right:50, bottom:0, left:50},
     width = 960 - margin.left - margin.right,
@@ -125,7 +125,7 @@ slider.insert("g", ".track-overlay")
     .attr("class", "ticks")
     .attr("transform", "translate(0," + 18 + ")")
   .selectAll("text")
-    .data(x.ticks(10))
+    .data(x.ticks(20))
     .enter()
     .append("text")
     .attr("x", x)
