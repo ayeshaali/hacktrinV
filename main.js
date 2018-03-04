@@ -113,7 +113,7 @@ svg.selectAll("path")
     .duration(200)    
     .style("opacity", .9);    
 
-    div.html(d.properties.year + "<br/>")  
+    div.html(d.properties.state+ "<br/>"+ d.properties.year )  
     .style("left", (d3.event.pageX) + "px")   
     .style("top", (d3.event.pageY - 28) + "px");  
   })          
