@@ -40,6 +40,7 @@ var svg = d3.select("body")
         
 // Append Div for tooltip to SVG
 var div = d3.select("body")
+        .attr("class", "map")
 		    .append("div")   
     		.attr("class", "tooltip")               
     		.style("opacity", 0);
