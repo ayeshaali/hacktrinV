@@ -83,7 +83,7 @@ var margin = {top:50, right:50, bottom:0, left:50},
     width = 960 - margin.left - margin.right,
     height = 2700 - margin.top - margin.bottom;
 
-var svg = d3.select("#vis")
+var svg1 = d3.select("#vis")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);  
@@ -101,7 +101,7 @@ var x = d3.scaleTime()
     .range([0, targetValue])
     .clamp(true);
 
-var slider = svg.append("g")
+var slider = svg1.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
 
@@ -109,9 +109,9 @@ slider.append("line")
     .attr("class", "track")
     .attr("x1", x.range()[0])
     .attr("x2", x.range()[1])
-  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
     .attr("class", "track-inset")
-  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
     .attr("class", "track-overlay")
     .call(d3.drag()
         .on("start.interrupt", function() { slider.interrupt(); })
@@ -148,13 +148,12 @@ var label = slider.append("text")
 
 var dataset;
 
-var plot = svg.append("g")
+var plot = svg1.append("g")
     .attr("class", "plot")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/circles.csv", prepare, function(data) {
-  dataset = data;
-  
+d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", prepare, function(data) {
+  dataset = data;  
   playButton
     .on("click", function() {
     var button = d3.select(this);
@@ -173,8 +172,8 @@ d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/circles.csv
 })
 
 function prepare(d) {
-  d.id = d.id;
-  d.date = parseDate(d.date);
+  d.state = d.state;
+  d.year = parseDate(d.year);
   return d;
 }
   
@@ -200,7 +199,7 @@ function update(h) {
 
   // filter data set and redraw plot
   var newData = dataset.filter(function(d) {
-    return d.date < h;
+    return d.year < h;
   })
 }
 
