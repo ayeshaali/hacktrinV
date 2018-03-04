@@ -40,6 +40,7 @@ body {
 </style>
 </head>
 <body>
+<button onclick="update(1880)">Click me</button>
 <script type="text/javascript">
 
 /*  This visualization was made possible by modifying code provided by:
@@ -59,7 +60,7 @@ var width = 960;
 var height = 500;
 
 //year of map
-var year = 1880;
+var year;
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -90,7 +91,8 @@ var div = d3.select("body")
     		.style("opacity", 0);
 
 // Load in my states data!
-d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
+function update(year) {
+	d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
 color.domain([0,1,2018]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
@@ -155,11 +157,6 @@ var legend = d3.select("body").append("svg")
      			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
     legend.append("rect")
-        .attr("width", 40)
-        .attr("height", 18)
-        .style("fill", rgb(255,255,255));
-
-    legend.append("rect")
    		  .attr("width", 18)
    		  .attr("height", 18)
    		  .style("fill", color);
@@ -173,6 +170,7 @@ var legend = d3.select("body").append("svg")
 	});
 
 });
+}
 </script>
 </body>
-</html>s
+</html>
