@@ -35,10 +35,10 @@ path:hover {
 div.tooltip { 
     position: absolute;     
     text-align: center;     
-    width: 60px;          
-    height: 40px;         
+    width: 65px;          
+    height: 50px;         
     padding: 2px;       
-    font: 12px "Tahoma";;    
+    font: 14px "Tahoma";;    
     background: rgb(193,213,231); 
     border: 0px;    
     border-radius: 8px;     
