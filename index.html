@@ -207,8 +207,6 @@ var path = d3.geo.path()               // path generator that will convert GeoJS
 var color = d3.scale.linear()
 			  .range(["rgb(255,255,255)", "rgb(213,222,217)","rgb(69,173,168)"]);
 
-var legendText = ["Current States", "Non-State",year];
-
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
 			.append("svg")
@@ -233,8 +231,8 @@ d3.json("https://raw.githubusercontent.com/python-visualization/folium/master/ex
         .on("start.interrupt", function() { slider.interrupt(); })
         .on("start drag", function() {
           currentValue = d3.event.x;
-          year = x.invert(currentValue);
-          console.log("drawing");
+          year = formatDateIntoYear(x.invert(currentValue));
+          console.log(year);
           drawMap(data, json, year);
           update(x.invert(currentValue)); 
         })
@@ -332,7 +330,8 @@ function drawMap (data, json, year) {
 
 	// Get data value
 	var value = d.properties.year;
-	console.log(value)
+	console.log(year);
+	console.log(value);
 	if (value<year) {
 		return "rgb(69,173,168)";
 		//return color(value);
@@ -343,15 +342,16 @@ function drawMap (data, json, year) {
 	}
 });
 
+	var legendText = ["Current States", "Non-State",year];
 	var legend = d3.select("body").append("svg")
-      			.attr("class", "legend")
-     			.attr("width", 140)
-    			.attr("height", 200)
-   				.selectAll("g")
-   				.data(color.domain().slice().reverse())
-   				.enter()
-   				.append("g")
-     			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+      	.attr("class", "legend")
+     	.attr("width", 140)
+    	.attr("height", 200)
+   		.selectAll("g")
+   		.data(color.domain().slice().reverse())
+   		.enter()
+   		.append("g")
+     	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   	legend.append("rect")
    		  .attr("width", 18)
