@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="min.js"></script>
 <style type="text/css">
 
 /* On mouse hover, lighten state color */
@@ -38,73 +37,9 @@ body {
 	top:350px;
 }
 
-body {
-      font-family:"avenir next", Arial, sans-serif;
-      font-size: 12px;
-      color: #696969;
-    }
-
-    #play-button {
-      position: absolute;
-      top: 260px;
-      left: 50px;
-      background: #f08080;
-      padding-right: 26px;
-      border-radius: 3px;
-      border: none;
-      color: white;
-      margin: 0;
-      padding: 0 12px;
-      width: 60px;
-      cursor: pointer;
-      height: 30px;
-    }
-
-    #play-button:hover {
-      background-color: #696969;
-    }    
-    
-    .ticks {
-      font-size: 10px;
-    }
-
-    .track,
-    .track-inset,
-    .track-overlay {
-      stroke-linecap: round;
-    }
-
-    .track {
-      stroke: #000;
-      stroke-opacity: 0.3;
-      stroke-width: 10px;
-    }
-
-    .track-inset {
-      stroke: #dcdcdc;
-      stroke-width: 8px;
-    }
-
-    .track-overlay {
-      pointer-events: stroke;
-      stroke-width: 50px;
-      stroke: transparent;
-      cursor: crosshair;
-    }
-
-    .handle {
-      fill: #fff;
-      stroke: #000;
-      stroke-opacity: 0.5;
-      stroke-width: 1.25px;
-    }
-
 </style>
 </head>
 <body>
-<div id="vis">
-  <button id="play-button">Play</button>
-</div>
 <script type="text/javascript">
 
 /*  This visualization was made possible by modifying code provided by:
@@ -117,81 +52,14 @@ http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
 
 Mike Bostock, Pie Chart Legend
 http://bl.ocks.org/mbostock/3888852  */
-var year;
 
-var formatDateIntoYear = d3.timeFormat("%Y");
-var formatDate = d3.timeFormat("%Y");
-var parseDate = d3.timeParse("%y");
-
-var startDate = new Date("1788"),
-    endDate = new Date("2019");
-
-var margin = {top:50, right:50, bottom:0, left:50},
-    width = 960 - margin.left - margin.right,
-    height = 960 - margin.top - margin.bottom;
-
-var svg1 = d3.select("#vis")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);  
-
-////////// slider //////////
-
-var moving = false;
-var currentValue = 0;
-var targetValue = width;
-
-var playButton = d3.select("#play-button");
-    
-var x = d3.scaleTime()
-    .domain([startDate, endDate])
-    .range([0, targetValue])
-    .clamp(true);
-
-var slider = svg1.append("g")
-    .attr("class", "slider")
-    .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
-
-slider.append("line")
-    .attr("class", "track")
-    .attr("x1", x.range()[0])
-    .attr("x2", x.range()[1])
-    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    .attr("class", "track-inset")
-    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    .attr("class", "track-overlay");
-    
-
-slider.insert("g", ".track-overlay")
-    .attr("class", "ticks")
-    .attr("transform", "translate(0," + 18 + ")")
-  .selectAll("text")
-    .data(x.ticks(20))
-    .enter()
-    .append("text")
-    .attr("x", x)
-    .attr("y", 10)
-    .attr("text-anchor", "middle")
-    .text(function(d) { return formatDateIntoYear(d); });
-
-var handle = slider.insert("circle", ".track-overlay")
-    .attr("class", "handle")
-    .attr("r", 9);
-
-var label = slider.append("text")  
-    .attr("class", "label")
-    .attr("text-anchor", "middle")
-    .text(formatDate(startDate))
-    .attr("transform", "translate(0," + (-25) + ")")
-
- 
 		
 //Width and height of map
 var width = 960;
 var height = 500;
-var dataset;
 
 //year of map
+var year = 1880;
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -207,12 +75,13 @@ var path = d3.geo.path()               // path generator that will convert GeoJS
 var color = d3.scale.linear()
 			  .range(["rgb(255,255,255)", "rgb(213,222,217)","rgb(69,173,168)"]);
 
+var legendText = ["Current States", "Non-State",year];
+
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
 			.append("svg")
 			.attr("width", width)
-			.attr("height", height)
-			.attr("display", "inline-block");
+			.attr("height", height);
         
 // Append Div for tooltip to SVG
 var div = d3.select("body")
@@ -221,81 +90,14 @@ var div = d3.select("body")
     		.style("opacity", 0);
 
 // Load in my states data!
-d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", prepare, function(data) {
-	color.domain([0,1,2018]); // setting the range of the input data
+d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
+color.domain([0,1,2018]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
 d3.json("https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", function(json) {
 
-	slider.call(d3.drag()
-        .on("start.interrupt", function() { slider.interrupt(); })
-        .on("start drag", function() {
-          currentValue = d3.event.x;
-          year = formatDateIntoYear(x.invert(currentValue));
-          console.log(year);
-          drawMap(data, json, year);
-          update(x.invert(currentValue)); 
-        })
-    );
-// Loop through each state data value in the .csv file	
-  dataset = data;  
-  playButton
-    .on("click", function() {
-    var button = d3.select(this);
-    if (button.text() == "Pause") {
-      moving = false;
-      clearInterval(timer);
-      // timer = 0;
-      button.text("Play");
-    } else {
-      moving = true;
-      timer = setInterval(step, 100);
-      button.text("Pause");
-    }
-    console.log("Slider moving: " + moving);
-  })
-
-	});
-
-// Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-
-});
-
-
-function prepare(d) {
-  d.state = d.state;
-  d.year = parseDate(d.year);
-  return d;
-}
-  
-function step() {
-  update(x.invert(currentValue));
-  currentValue = currentValue + (targetValue/151);
-  if (currentValue > targetValue) {
-    moving = false;
-    currentValue = 0;
-    clearInterval(timer);
-    // timer = 0;
-    playButton.text("Play");
-    console.log("Slider moving: " + moving);
-  }
-}
-
-function update(h) {
-  // update position and text of label according to slider scale
-  handle.attr("cx", x(h));
-  label
-    .attr("x", x(h))
-    .text(formatDate(h));
-
-  // filter data set and redraw plot
-  var newData = dataset.filter(function(d) {
-    return d.year < h;
-  })
-}
-
-function drawMap (data, json, year) {
-	for (var i = 0; i < data.length; i++) {
+// Loop through each state data value in the .csv file
+for (var i = 0; i < data.length; i++) {
 
 	// Grab State Name
 	var dataState = data[i].state;
@@ -316,10 +118,10 @@ function drawMap (data, json, year) {
 			break;
 		}
 	}
-	}
-
-	// Bind the data to the SVG and create one path per GeoJSON feature
-	svg.selectAll("path")
+}
+		
+// Bind the data to the SVG and create one path per GeoJSON feature
+svg.selectAll("path")
 	.data(json.features)
 	.enter()
 	.append("path")
@@ -330,8 +132,7 @@ function drawMap (data, json, year) {
 
 	// Get data value
 	var value = d.properties.year;
-	console.log(year);
-	console.log(value);
+
 	if (value<year) {
 		return "rgb(69,173,168)";
 		//return color(value);
@@ -342,16 +143,17 @@ function drawMap (data, json, year) {
 	}
 });
 
-	var legendText = ["Current States", "Non-State",year];
-	var legend = d3.select("body").append("svg")
-      	.attr("class", "legend")
-     	.attr("width", 140)
-    	.attr("height", 200)
-   		.selectAll("g")
-   		.data(color.domain().slice().reverse())
-   		.enter()
-   		.append("g")
-     	.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+// Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
+var legend = d3.select("body").append("svg")
+      			.attr("class", "legend")
+     			.attr("width", 140)
+    			.attr("height", 200)
+   				.selectAll("g")
+   				.data(color.domain().slice().reverse())
+   				.enter()
+   				.append("g")
+     			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   	legend.append("rect")
    		  .attr("width", 18)
@@ -364,8 +166,9 @@ function drawMap (data, json, year) {
       	  .attr("y", 9)
       	  .attr("dy", ".35em")
       	  .text(function(d) { return d; });
+	});
 
-}
+});
 </script>
 </body>
-</html>
+</html>s
