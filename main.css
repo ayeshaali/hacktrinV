@@ -18,7 +18,7 @@ body {
 }
 
 #name {
-  font-family: "Book Antiqua";
+  font-family: "Tahoma";
   padding-left: 2%;
   color: hsl(225,90%,80%);
   font-size: 140%;
@@ -38,7 +38,7 @@ div.tooltip {
     width: 60px;          
     height: 40px;         
     padding: 2px;       
-    font: 12px "Book Antiqua";;    
+    font: 12px "Tahoma";;    
     background: rgb(193,213,231); 
     border: 0px;    
     border-radius: 8px;     
@@ -47,7 +47,7 @@ div.tooltip {
         
 /* Legend Font Style */
 body {
-	font: 11px "Book Antiqua";;
+	font: 11px "Tahoma";;
 }
         
 /* Legend Position Style */
