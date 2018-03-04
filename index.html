@@ -37,9 +37,56 @@ body {
 	top:350px;
 }
 
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    position:absolute;
+    left:0px;
+    top:520px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
 </style>
 </head>
 <body>
+
+<div class="slidecontainer">
+  <input type="range" min="1789" max="2018" value="1789" class="slider" id="myRange">
+</div>
+
 <script type="text/javascript">
 
 /*  This visualization was made possible by modifying code provided by:
@@ -59,7 +106,7 @@ var width = 960;
 var height = 500;
 
 //year of map
-var year = 1880;
+var year = 1789;
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -89,6 +136,8 @@ var div = d3.select("body")
     		.attr("class", "tooltip")               
     		.style("opacity", 0);
 
+
+function update(year) {
 // Load in my states data!
 d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
 color.domain([0,1,2018]); // setting the range of the input data
@@ -166,8 +215,19 @@ var legend = d3.select("body").append("svg")
       	  .attr("dy", ".35em")
       	  .text(function(d) { return d; });
 	});
-
 });
+}
+
+  var slider = document.getElementById("myRange");
+  var output = document.getElementById("demo");
+
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function() {
+        console.log(this.value);
+        year=this.value;
+        svg.selectAll("*").remove();
+        update(year);
+  }
 </script>
 </body>
-</html>s
+</html>
