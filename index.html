@@ -69,9 +69,9 @@ var path = d3.geo.path()               // path generator that will convert GeoJS
 		
 // Define linear scale for output
 var color = d3.scale.linear()
-			  .range(["rgb(213,222,217)","rgb(69,173,168)","rgb(84,36,55)","rgb(217,91,67)"]);
+			  .range(["rgb(213,222,217)","rgb(69,173,168)"]);
 
-var legendText = ["Cities Lived", "States Lived", "States Visited", "Nada"];
+var legendText = ["Current States", "Non-State"];
 
 //Create SVG element and append map to the SVG
 var svg = d3.select("body")
@@ -87,7 +87,7 @@ var div = d3.select("body")
 
 // Load in my states data!
 d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
-color.domain([0,1,2,3]); // setting the range of the input data
+color.domain([0,1]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
 d3.json("https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", function(json) {
