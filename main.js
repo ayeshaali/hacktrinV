@@ -98,11 +98,11 @@ svg.selectAll("path")
 	var value = d.properties.year;
   var territory = d.properties.territory;
 
-  if (value<year) {
+  if (value<=year) {
     return "rgb(69,173,168)";
     //return color(value);
   }
-  else if(territory<year){
+  else if(territory<=year){
     return "rgb(145, 216, 209)";
   }
   else {
