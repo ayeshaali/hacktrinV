@@ -117,6 +117,7 @@ http://www.d3noob.org/2013/01/adding-tooltips-to-d3js-graph.html
 
 Mike Bostock, Pie Chart Legend
 http://bl.ocks.org/mbostock/3888852  */
+var year;
 
 var formatDateIntoYear = d3.timeFormat("%Y");
 var formatDate = d3.timeFormat("%Y");
@@ -158,14 +159,8 @@ slider.append("line")
     .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
     .attr("class", "track-inset")
     .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-    .attr("class", "track-overlay")
-    .call(d3.drag()
-        .on("start.interrupt", function() { slider.interrupt(); })
-        .on("start drag", function() {
-          currentValue = d3.event.x;
-          update(x.invert(currentValue)); 
-        })
-    );
+    .attr("class", "track-overlay");
+    
 
 slider.insert("g", ".track-overlay")
     .attr("class", "ticks")
@@ -197,7 +192,6 @@ var height = 500;
 var dataset;
 
 //year of map
-var year = 2018;
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -230,35 +224,22 @@ var div = d3.select("body")
 
 // Load in my states data!
 d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", prepare, function(data) {
-color.domain([0,1,2018]); // setting the range of the input data
+	color.domain([0,1,2018]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
 d3.json("https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json", function(json) {
 
-// Loop through each state data value in the .csv file
-for (var i = 0; i < data.length; i++) {
-
-	// Grab State Name
-	var dataState = data[i].state;
-
-	// Grab data value 
-	var dataValue = data[i].year;
-
-	// Find the corresponding state inside the GeoJSON
-	for (var j = 0; j < json.features.length; j++)  {
-		var jsonState = json.features[j].properties.name;
-
-		if (dataState == jsonState) {
-
-			// Copy the data value into the JSON
-			json.features[j].properties.year = dataValue; 
-
-			// Stop looking through the JSON
-			break;
-		}
-	}
-}
-	
+	slider.call(d3.drag()
+        .on("start.interrupt", function() { slider.interrupt(); })
+        .on("start drag", function() {
+          currentValue = d3.event.x;
+          year = x.invert(currentValue);
+          console.log("drawing");
+          drawMap(data, json, year);
+          update(x.invert(currentValue)); 
+        })
+    );
+// Loop through each state data value in the .csv file	
   dataset = data;  
   playButton
     .on("click", function() {
@@ -274,54 +255,11 @@ for (var i = 0; i < data.length; i++) {
       button.text("Pause");
     }
     console.log("Slider moving: " + moving);
-  })	
-// Bind the data to the SVG and create one path per GeoJSON feature
-svg.selectAll("path")
-	.data(json.features)
-	.enter()
-	.append("path")
-	.attr("d", path)
-	.style("stroke", "#fff")
-	.style("stroke-width", "1")
-	.style("fill", function(d) {
+  })
 
-	// Get data value
-	var value = d.properties.year;
-
-	if (value<year) {
-		return "rgb(69,173,168)";
-		//return color(value);
-	} 
-	else {
-		//If value is undefined…
-		return "rgb(213,222,217)";
-	}
-});
-
+	});
 
 // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-var legend = d3.select("body").append("svg")
-      			.attr("class", "legend")
-     			.attr("width", 140)
-    			.attr("height", 200)
-   				.selectAll("g")
-   				.data(color.domain().slice().reverse())
-   				.enter()
-   				.append("g")
-     			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-  	legend.append("rect")
-   		  .attr("width", 18)
-   		  .attr("height", 18)
-   		  .style("fill", color);
-
-  	legend.append("text")
-  		  .data(legendText)
-      	  .attr("x", 24)
-      	  .attr("y", 9)
-      	  .attr("dy", ".35em")
-      	  .text(function(d) { return d; });
-	});
 
 });
 
@@ -356,6 +294,77 @@ function update(h) {
   var newData = dataset.filter(function(d) {
     return d.year < h;
   })
+}
+
+function drawMap (data, json, year) {
+	for (var i = 0; i < data.length; i++) {
+
+	// Grab State Name
+	var dataState = data[i].state;
+
+	// Grab data value 
+	var dataValue = data[i].year;
+
+	// Find the corresponding state inside the GeoJSON
+	for (var j = 0; j < json.features.length; j++)  {
+		var jsonState = json.features[j].properties.name;
+
+		if (dataState == jsonState) {
+
+			// Copy the data value into the JSON
+			json.features[j].properties.year = dataValue; 
+
+			// Stop looking through the JSON
+			break;
+		}
+	}
+	}
+
+	// Bind the data to the SVG and create one path per GeoJSON feature
+	svg.selectAll("path")
+	.data(json.features)
+	.enter()
+	.append("path")
+	.attr("d", path)
+	.style("stroke", "#fff")
+	.style("stroke-width", "1")
+	.style("fill", function(d) {
+
+	// Get data value
+	var value = d.properties.year;
+	console.log(value)
+	if (value<year) {
+		return "rgb(69,173,168)";
+		//return color(value);
+	} 
+	else {
+		//If value is undefined…
+		return "rgb(213,222,217)";
+	}
+});
+
+	var legend = d3.select("body").append("svg")
+      			.attr("class", "legend")
+     			.attr("width", 140)
+    			.attr("height", 200)
+   				.selectAll("g")
+   				.data(color.domain().slice().reverse())
+   				.enter()
+   				.append("g")
+     			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  	legend.append("rect")
+   		  .attr("width", 18)
+   		  .attr("height", 18)
+   		  .style("fill", color);
+
+  	legend.append("text")
+  		  .data(legendText)
+      	  .attr("x", 24)
+      	  .attr("y", 9)
+      	  .attr("dy", ".35em")
+      	  .text(function(d) { return d; });
+
 }
 </script>
 </body>
