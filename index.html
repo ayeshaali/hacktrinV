@@ -82,11 +82,15 @@ body {
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 
 <div class="slidecontainer">
   <input type="range" min="1789" max="2018" value="1789" class="slider" id="myRange">
 </div>
 
+=======
+<button onclick="update(1880)">Click me</button>
+>>>>>>> e1c4833eb2f9b31472e7b96393636207cceb50e8
 <script type="text/javascript">
 
 /*  This visualization was made possible by modifying code provided by:
@@ -106,7 +110,11 @@ var width = 960;
 var height = 500;
 
 //year of map
+<<<<<<< HEAD
 var year = 1789;
+=======
+var year;
+>>>>>>> e1c4833eb2f9b31472e7b96393636207cceb50e8
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -139,7 +147,8 @@ var div = d3.select("body")
 
 function update(year) {
 // Load in my states data!
-d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
+function update(year) {
+	d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
 color.domain([0,1,2018]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
@@ -228,6 +237,7 @@ var legend = d3.select("body").append("svg")
         svg.selectAll("*").remove();
         update(year);
   }
+
 </script>
 </body>
 </html>
