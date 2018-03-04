@@ -18,7 +18,7 @@ body {
 }
 
 #name {
-  font-family: "Abril Fatface";
+  font-family: "Book Antiqua";
   padding-left: 2%;
   color: hsl(225,90%,80%);
   font-size: 140%;
@@ -38,8 +38,8 @@ div.tooltip {
     width: 60px;          
     height: 28px;         
     padding: 2px;       
-    font: 12px sans-serif;    
-    background: lightsteelblue; 
+    font: 12px "Book Antiqua";;    
+    background: rgb(193,213,231); 
     border: 0px;    
     border-radius: 8px;     
     pointer-events: none;     
@@ -47,7 +47,7 @@ div.tooltip {
         
 /* Legend Font Style */
 body {
-	font: 11px sans-serif;
+	font: 11px "Book Antiqua";;
 }
         
 /* Legend Position Style */
