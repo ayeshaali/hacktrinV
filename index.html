@@ -194,6 +194,7 @@ var label = slider.append("text")
 //Width and height of map
 var width = 960;
 var height = 500;
+var dataset;
 
 //year of map
 var year = 2018;
@@ -257,7 +258,23 @@ for (var i = 0; i < data.length; i++) {
 		}
 	}
 }
-		
+	
+  dataset = data;  
+  playButton
+    .on("click", function() {
+    var button = d3.select(this);
+    if (button.text() == "Pause") {
+      moving = false;
+      clearInterval(timer);
+      // timer = 0;
+      button.text("Play");
+    } else {
+      moving = true;
+      timer = setInterval(step, 100);
+      button.text("Pause");
+    }
+    console.log("Slider moving: " + moving);
+  })	
 // Bind the data to the SVG and create one path per GeoJSON feature
 svg.selectAll("path")
 	.data(json.features)

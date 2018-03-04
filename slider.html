@@ -93,55 +93,7 @@ var plot = svg1.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", prepare, function(data) {
-  dataset = data;  
-  playButton
-    .on("click", function() {
-    var button = d3.select(this);
-    if (button.text() == "Pause") {
-      moving = false;
-      clearInterval(timer);
-      // timer = 0;
-      button.text("Play");
-    } else {
-      moving = true;
-      timer = setInterval(step, 100);
-      button.text("Pause");
-    }
-    console.log("Slider moving: " + moving);
-  })
 })
-
-function prepare(d) {
-  d.state = d.state;
-  d.year = parseDate(d.year);
-  return d;
-}
-  
-function step() {
-  update(x.invert(currentValue));
-  currentValue = currentValue + (targetValue/151);
-  if (currentValue > targetValue) {
-    moving = false;
-    currentValue = 0;
-    clearInterval(timer);
-    // timer = 0;
-    playButton.text("Play");
-    console.log("Slider moving: " + moving);
-  }
-}
-
-function update(h) {
-  // update position and text of label according to slider scale
-  handle.attr("cx", x(h));
-  label
-    .attr("x", x(h))
-    .text(formatDate(h));
-
-  // filter data set and redraw plot
-  var newData = dataset.filter(function(d) {
-    return d.year < h;
-  })
-}
 
 </script>
 </body>
