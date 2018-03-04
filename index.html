@@ -106,11 +106,7 @@ var width = 960;
 var height = 500;
 
 //year of map
-<<<<<<< HEAD
 var year = 1789;
-=======
-var year;
->>>>>>> e1c4833eb2f9b31472e7b96393636207cceb50e8
 
 // D3 Projection
 var projection = d3.geo.albersUsa()
@@ -143,8 +139,7 @@ var div = d3.select("body")
 
 function update(year) {
 // Load in my states data!
-function update(year) {
-	d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
+d3.csv("https://raw.githubusercontent.com/ayeshaali/hacktrinV/master/stateslived.csv", function(data) {
 color.domain([0,1,2018]); // setting the range of the input data
 
 // Load GeoJSON data and merge with states data
@@ -233,7 +228,6 @@ var legend = d3.select("body").append("svg")
         svg.selectAll("*").remove();
         update(year);
   }
-
 </script>
 </body>
 </html>
