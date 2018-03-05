@@ -4,6 +4,9 @@ body {
 
 .map {
     margin-top: 50px;
+    margin-left:auto; 
+    margin-right:auto; 
+    display:block;
 }
 
 #header {
@@ -53,7 +56,7 @@ body {
 /* Legend Position Style */
 .legend {
 	position:absolute;
-	left:800px;
+	left:900px;
 	top:350px;
 }
 
